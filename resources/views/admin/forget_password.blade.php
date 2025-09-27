@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin Login</title>
+    <title>Admin Forget Password</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body class="container">
-    <h1>Admin Login</h1>
+    <h1>Admin Forget Password</h1>
     @if ($errors->any())
     <ul>
         @foreach ($errors->all() as $error )
@@ -27,21 +27,16 @@
         <li>{{ Session :: get('success')}}</li>
 
     @endif
-    <form action="{{ route('admin.login_submit') }}" method="POST" >
+    <form action="{{ route('admin.password_submit') }}" method="POST" >
         @csrf
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
    
   </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" name="password" class="form-control" id="exampleInputPassword1">
-  </div>
-  <div class="mb-3 form-check">
-    <a href="{{ route('admin.forgot_password') }}">Forget Password </a>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+
+  
+  <button type="submit" class="btn btn-primary">Email password reset link</button>
 </form>
     
 </body>
