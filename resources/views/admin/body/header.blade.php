@@ -2,6 +2,7 @@
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
+            
             <div class="navbar-brand-box">
                 <a href="index.html" class="logo logo-dark">
                     <span class="logo-sm">
@@ -34,7 +35,10 @@
                 </div>
             </form>
         </div>
-
+         @php
+                 $id = Auth::guard('admin')->id();
+                 $profileData = App\Models\Admin::find($id);
+            @endphp
         <div class="d-flex">
 
             <div class="dropdown d-inline-block d-lg-none ms-2">
@@ -166,9 +170,8 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item bg-light-subtle border-start border-end" id="page-header-user-dropdown"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}"
-                        alt="Header Avatar">
-                    <span class="d-none d-xl-inline-block ms-1 fw-medium">Shawn L.</span>
+                     <img class="rounded-circle header-profile-user" src="{{ (!empty($profileData->photo)) ? url('upload/admin_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="Header Avatar" >
+                    <span class="d-none d-xl-inline-block ms-1 fw-medium">{{ $profileData->name }}</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
