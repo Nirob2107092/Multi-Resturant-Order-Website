@@ -39,7 +39,7 @@
     <input type="password" name="password" class="form-control" id="exampleInputPassword1">
   </div>
   <div class="mb-3 form-check">
-    <a href="{{ route('admin.forgot_password') }}">Forget Password </a>
+    <a href="{{ route('admin.forget_password') }}">Forget Password </a>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
