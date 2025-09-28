@@ -20,6 +20,7 @@
         <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{ asset('backend/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 
     </head>
 
@@ -56,7 +57,7 @@
 @if (Session::has('success'))
     <li>{{ Session::get('success') }}</li>
 @endif                            
-<form class="mt-4 pt-2" action="{{ route('admin.login_submit') }}"  method="post">
+<form class="mt-4 pt-2" action="{{ route('client.login_submit') }}"  method="post">
     @csrf
 
     <div class="mb-3">
@@ -262,6 +263,32 @@
         <script src="{{ asset('backend/assets/libs/pace-js/pace.min.js') }}"></script>
         <!-- password addon init -->
         <script src="{{ asset('backend/assets/js/pages/pass-addon.init.js') }}"></script>
+         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+ @if(Session::has('message'))
+ var type = "{{ Session::get('alert-type','info') }}"
+ switch(type){
+    case 'info':
+    toastr.info(" {{ Session::get('message') }} ");
+    break;
+
+    case 'success':
+    toastr.success(" {{ Session::get('message') }} ");
+    break;
+
+    case 'warning':
+    toastr.warning(" {{ Session::get('message') }} ");
+    break;
+
+    case 'error':
+    toastr.error(" {{ Session::get('message') }} ");
+    break; 
+ }
+ @endif 
+</script>
+
+
 
     </body>
 
