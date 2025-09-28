@@ -105,4 +105,35 @@ private function deleteOldImage(string $path)
     }
 }
 
+
+public function AdminChangePassword(){
+    $id=Auth::guard('admin')->id();
+    $profileData=Admin::find($id);
+    return view('admin.admin_change_password',compact('profileData'));
+}
+public function AdminPasswordUpdate(Request $request)
+{
+$admin=Auth::guard('admin')->user();
+    $request->validate([
+        'old_password'=>'required',
+        'new_password'=>'required|confirmed',
+    ]);
+    if(!Hash::check($request->old_password,$admin->password)){
+        $notification=array(
+            'message'=>'Old Password Does Not Match',
+            'alert-type'=>'error'
+        );
+        return back()->with($notification);
+    }
+    //update the new password
+    Admin::whereId($admin->id)->update([
+        'password'=>Hash::make($request->new_password)
+    ]);
+    $notification=array(
+        'message'=>'Password Changed Successfully',
+        'alert-type'=>'success'
+    );
+    return back()->with($notification);
+}
+
 }
