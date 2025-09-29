@@ -13,6 +13,21 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('slug')->nullable();
+            $table->integer('category_id');
+            $table->integer('city_id');
+            $table->integer('menu_id');
+            $table->string('code')->nullable();
+            $table->string('qty')->nullable();
+            $table->string('size')->nullable();
+            $table->string('price')->nullable();
+            $table->string('discount_price')->nullable();
+            $table->string('image')->nullable();
+            $table->string('client_id')->nullable();
+            $table->string('most_populer')->nullable();
+            $table->string('best_seller')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
