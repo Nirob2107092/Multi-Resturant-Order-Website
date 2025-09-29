@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 { use HasFactory;
-    protected $guarded = [];    
+    protected $guarded = [];
     //
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class, 'menu_id', 'id');
+    }
 }
