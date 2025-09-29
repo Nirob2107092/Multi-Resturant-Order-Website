@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use App\Models\City;
 class CategoryController extends Controller
 {
     public function AllCategory()
@@ -100,5 +101,11 @@ class CategoryController extends Controller
         return redirect()->back()->with($notification);
     }
     // End Method 
+    ////All city methods
+    public function AllCity()
+    {
+       $city=City::latest()->get();
+       return view('admin.backend.city.all_city',compact('city'));
+    }
 
 }
