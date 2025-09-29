@@ -9,6 +9,9 @@ use App\Models\Category;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use App\Models\Menu;
+use App\Models\Product;
+
+
 
 class RestaurantController extends Controller
 {
@@ -106,6 +109,14 @@ class RestaurantController extends Controller
         );
 
         return redirect()->back()->with($notification);
+    }
+    // End Method 
+    ////// All Product Method started 
+
+    public function AllProduct()
+    {
+        $product = Product::latest()->get();
+        return view('client.backend.product.all_product', compact('product'));
     }
     // End Method 
 
