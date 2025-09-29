@@ -61,6 +61,7 @@ Route::middleware('admin')->group(function(){
     Route::controller(CategoryController::class)->group(function(){
         Route::get('/all/category','AllCategory')->name('all.category');
         Route::get('/add/category', 'AddCategory')->name('add.category');
+        Route::get('/store/category','StoreCategory')->name('category.store');
     });
 });
 ///End Admin middleware
