@@ -85,13 +85,15 @@ Route::middleware('admin')->group(function(){
         });
         Route::controller(ManageController::class)->group(function () {
             Route::get('/pending/restaurant', 'PendingRestaurant')->name('pending.restaurant');
+            Route::get('/clientchangeStatus', 'ClientChangeStatus');
+            Route::get('/approve/restaurant', 'ApproveRestaurant')->name('approve.restaurant');
         });
 
     });
 });
 ///End Admin middleware
 
-Route::middleware('client')->group(function () {
+Route::middleware(['client', 'status'])->group(function () {
 
     Route::controller(RestaurantController::class)->group(function () {
         Route::get('/all/menu', 'AllMenu')->name('all.menu');

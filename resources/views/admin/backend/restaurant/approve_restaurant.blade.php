@@ -1,4 +1,4 @@
-extends('admin.admin_dashboard')
+@extends('admin.admin_dashboard')
 @section('admin')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
@@ -10,7 +10,7 @@ extends('admin.admin_dashboard')
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Pending Restaurant</h4>
+                    <h4 class="mb-sm-0 font-size-18">Approve Restaurant</h4>
 
                     
 
@@ -55,8 +55,7 @@ extends('admin.admin_dashboard')
                     @endif
                 </td>
                 
-        
-        <td>
+        <td> 
         <input data-id="{{$item->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $item->status ? 'checked' : '' }}>
 
                 </td> 
