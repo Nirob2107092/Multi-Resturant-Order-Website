@@ -74,7 +74,7 @@
 <div class="col-xl-4 col-md-6"> 
     <div class="form-group mb-3">
         <label for="example-text-input" class="form-label">Product Name</label>
-        <input class="form-control" type="text" name="menu_name"  id="example-text-input">
+        <input class="form-control" type="text" name="name"  id="example-text-input">
     </div> 
 </div>
 
@@ -121,16 +121,16 @@
 </div>
 
 <div class="form-check mt-2">
-    <input class="form-check-input" name="best_seller" type="checkbox" id="formCheck2" value="1" > >
+    <input class="form-check-input" name="best_seller" type="checkbox" id="formCheck2" value="1"  >
     <label class="form-check-label" for="formCheck2">
         Best Seller
     </label>
 </div>
  
 <div class="form-check mt-2">
-    <input class="form-check-input" name="most_populer" type="checkbox" id="formCheck2"  value="1"  >
+    <input class="form-check-input"  name="most_populer" type="checkbox" id="formCheck2"  value="1"   >
     <label class="form-check-label" for="formCheck2">
-       Most Popular
+       Most Populer
     </label>
 </div>
 
@@ -186,22 +186,23 @@
                 },
                 image: {
                     required : true,
-                }, 
-                 menu_id: {
+                },
+                menu_id: {
                     required : true,
                 }, 
                 
             },
             messages :{
                 name: {
-                    required : 'Please Enter Product Name',
+                    required : 'Please Enter Name',
                 },
                 image: {
                     required : 'Please Select Image',
-                }, 
-                menu_id: {
-                    required : 'Please Select Menu',
                 },
+                menu_id: {
+                    required : 'Please Select One Menu',
+                }, 
+                 
 
             },
             errorElement : 'span', 
