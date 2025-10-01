@@ -88,7 +88,9 @@ Route::middleware('admin')->group(function(){
             Route::get('/clientchangeStatus', 'ClientChangeStatus');
             Route::get('/approve/restaurant', 'ApproveRestaurant')->name('approve.restaurant');
         });
-
+        Route::controller(ManageController::class)->group(function () {
+            Route::get('/all/banner', 'AllBanner')->name('all.banner');
+        });
     });
 });
 ///End Admin middleware

@@ -11,6 +11,9 @@ use Intervention\Image\Drivers\Gd\Driver;
 use App\Models\Menu;
 use App\Models\Product;
 use App\Models\City;
+use App\Models\Banner;
+
+
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Carbon\Carbon;
 use App\Models\Gllery;
@@ -184,6 +187,14 @@ class ManageController extends Controller
     {
         $client = Client::where('status', 1)->get();
         return view('admin.backend.restaurant.approve_restaurant', compact('client'));
+    }
+    // End Method 
+    /// All Banner Method in here 
+
+    public function AllBanner()
+    {
+        $banner = Banner::latest()->get();
+        return view('admin.backend.banner.all_banner', compact('banner'));
     }
     // End Method 
 
