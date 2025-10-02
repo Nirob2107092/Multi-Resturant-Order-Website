@@ -5,7 +5,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="description" content="Askbootstrap">
-      <meta name="author" content="Askbootstrap">
+  <meta name="csrf-token" content="{{ csrf_token() }}" >
+   <meta name="author" content="Askbootstrap">
       <title>User Dashboard - Online Food Ordering Website</title>
       <!-- Favicon Icon -->
       <link rel="icon" type="image/png" href="{{ asset('frontend/img/favicon.png') }}">
@@ -47,6 +48,9 @@
 
  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
 <script>
  @if(Session::has('message'))
  var type = "{{ Session::get('alert-type','info') }}"
@@ -70,6 +74,15 @@
  @endif 
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+      <script type="text/javascript">
+         $.ajaxSetup({
+            headers:{
+               'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            }
+         });
+</script>
+
 
 </body>
 </html>
