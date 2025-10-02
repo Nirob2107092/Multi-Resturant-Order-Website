@@ -9,6 +9,7 @@
       <title>User Dashboard - Online Food Ordering Website</title>
       <!-- Favicon Icon -->
       <link rel="icon" type="image/png" href="{{ asset('frontend/img/favicon.png') }}">
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
       <!-- Bootstrap core CSS-->
       <link href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
       <!-- Font Awesome-->
@@ -68,7 +69,7 @@
  }
  @endif 
 </script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </body>
 </html>
