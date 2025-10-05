@@ -38,6 +38,54 @@ class ManageOrderController extends Controller
         return view('admin.backend.order.deliverd_order', compact('allData'));
     }
     //End Method 
+    public function AdminOrderDetails($id)
+    {
+        $order = Order::with('user')->where('id', $id)->first();
+        $orderItem = OrderItem::with('product')->where('order_id', $id)->orderBy('id', 'desc')->get();
+
+        $totalPrice = 0;
+        foreach ($orderItem as $item) {
+            $totalPrice += $item->price * $item->qty;
+        }
+
+        return view('admin.backend.order.admin_order_details', compact('order', 'orderItem', 'totalPrice'));
+    } //End Method 
+    public function PendingToConfirm($id)
+    {
+        Order::find($id)->update(['status' => 'confirm']);
+        $notification = array(
+            'message' => 'Order Confirm Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('confirm.order')->with($notification);
+    }
+    //End Method 
+
+    public function ConfirmToProcessing($id)
+    {
+        Order::find($id)->update(['status' => 'processing']);
+        $notification = array(
+            'message' => 'Order Processing Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('processing.order')->with($notification);
+    }
+    //End Method 
+
+    public function ProcessingToDiliverd($id)
+    {
+        Order::find($id)->update(['status' => 'deliverd']);
+        $notification = array(
+            'message' => 'Order Processing Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('deliverd.order')->with($notification);
+    }
+    //End Method 
+
 
 
 }
