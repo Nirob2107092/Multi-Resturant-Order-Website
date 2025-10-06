@@ -135,6 +135,15 @@ Route::middleware('admin')->group(function () {
     Route::controller(ReportController::class)->group(function () {
         Route::get('/admin/all/reports', 'AminAllReports')->name('admin.all.reports');
         Route::post('/admin/search/bydate', 'AminSearchByDate')->name('admin.search.bydate');
+        Route::post('/admin/search/bymonth', 'AminSearchByMonth')->name('admin.search.bymonth');
+        Route::post('/admin/search/byyear', 'AminSearchByYear')->name('admin.search.byyear');
+    });
+
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('/client/all/reports', 'ClientAllReports')->name('client.all.reports');
+        Route::post('/client/search/bydate', 'ClientSearchByDate')->name('client.search.bydate');
+        Route::post('/client/search/bymonth', 'ClientSearchByMonth')->name('client.search.bymonth');
+        Route::post('/client/search/byyear', 'ClientSearchByYear')->name('client.search.byyear');
     });
 
 }); ///End Admin middleware
