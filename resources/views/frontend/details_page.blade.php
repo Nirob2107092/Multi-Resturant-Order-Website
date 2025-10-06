@@ -9,7 +9,7 @@ $menuNames = $products->map(function($product){
 })->toArray();
 $menuNamesString = implode(' . ',$menuNames);
 
-$coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1')->first();
+$coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1')->first(); 
 @endphp
 
 <section class="restaurant-detailed-banner">
@@ -355,81 +355,131 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
                             <button type="button" class="btn btn-outline-primary btn-sm">Rate and Review</button>
                          </div>
                       </div>
-                      <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews">
-                         <a href="#" class="btn btn-outline-primary btn-sm float-right">Top Rated</a>
-                         <h5 class="mb-1">All Ratings and Reviews</h5>
-                         <div class="reviews-members pt-4 pb-4">
-                            <div class="media">
-                               <a href="#"><img alt="Generic placeholder image" src="img/user/1.png" class="mr-3 rounded-pill"></a>
-                               <div class="media-body">
-                                  <div class="reviews-members-header">
-                                     <span class="star-rating float-right">
-                                     <a href="#"><i class="icofont-ui-rating active"></i></a>
-                                     <a href="#"><i class="icofont-ui-rating active"></i></a>
-                                     <a href="#"><i class="icofont-ui-rating active"></i></a>
-                                     <a href="#"><i class="icofont-ui-rating active"></i></a>
-                                     <a href="#"><i class="icofont-ui-rating"></i></a>
-                                     </span>
-                                     <h6 class="mb-1"><a class="text-black" href="#">Singh Osahan</a></h6>
-                                     <p class="text-gray">Tue, 20 Mar 2020</p>
-                                  </div>
-                                  <div class="reviews-members-body">
-                                     <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections </p>
-                                  </div>
-                                  <div class="reviews-members-footer">
-                                     <a class="total-like" href="#"><i class="icofont-thumbs-up"></i> 856M</a> <a class="total-like" href="#"><i class="icofont-thumbs-down"></i> 158K</a> 
-                                     
-                                  </div>
-                               </div>
-                            </div>
-                         </div>
-                         <hr>
-                         
-                         <hr>
-                         <a class="text-center w-100 d-block mt-4 font-weight-bold" href="#">See All Reviews</a>
-                      </div>
-                      <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
-                         <h5 class="mb-4">Leave Comment</h5>
-                         <p class="mb-2">Rate the Place</p>
-                         <div class="mb-4">
-                            <span class="star-rating">
-                            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                            </span>
-                         </div>
-                         <form>
-                            <div class="form-group">
-                               <label>Your Comment</label>
-                               <textarea class="form-control"></textarea>
-                            </div>
-                            <div class="form-group">
-                               <button class="btn btn-primary btn-sm" type="button"> Submit Comment </button>
-                            </div>
-                         </form>
-                      </div>
+   <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews">
+      <a href="#" class="btn btn-outline-primary btn-sm float-right">Top Rated</a>
+      <h5 class="mb-1">All Ratings and Reviews</h5>
+   
+   @php
+      $reviews = App\Models\Review::where('client_id',$client->id)->where('status',1)->latest()->limit(5)->get();
+   @endphp   
+      
+      @foreach ($reviews as $review)
+         
+      <div class="reviews-members pt-4 pb-4">
+         <div class="media">
+            <a href="#"><img alt="Generic placeholder image" src="{{ (!empty($review->user->photo)) ? url('upload/user_images/'.$review->user->photo) : url('upload/no_image.jpg') }}" class="mr-3 rounded-pill"></a>
+            <div class="media-body">
+               <div class="reviews-members-header">
+                  <span class="star-rating float-right">
+                  <a href="#"><i class="icofont-ui-rating active"></i></a>
+                  <a href="#"><i class="icofont-ui-rating active"></i></a>
+                  <a href="#"><i class="icofont-ui-rating active"></i></a>
+                  <a href="#"><i class="icofont-ui-rating active"></i></a>
+                  <a href="#"><i class="icofont-ui-rating"></i></a>
+                  </span>
+                  <h6 class="mb-1"><a class="text-black" href="#">{{ $review->user->name }}</a></h6>
+                  <p class="text-gray"> {{ Carbon\Carbon::parse($review->created_at)->diffForHumans() }} </p>
+               </div>
+               <div class="reviews-members-body">
+                  <p> {{ $review->comment }} </p>
+               </div>
+               <div class="reviews-members-footer">
+                  <a class="total-like" href="#"><i class="icofont-thumbs-up"></i> 856M</a> <a class="total-like" href="#"><i class="icofont-thumbs-down"></i> 158K</a> 
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+
+      @endforeach
+
+      <hr>
+      
+      <hr>
+      <a class="text-center w-100 d-block mt-4 font-weight-bold" href="#">See All Reviews</a>
+   </div>
+
+
+   <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
+     @guest
+     <p><b>For Add Resturant Review. You need to login first <a href="{{ route('login') }}"> Login Here </a> </b></p>
+     @else 
+
+  <style>
+   .star-rating label {
+      display: inline-flex;
+      margin-right: 5px;
+      cursor: pointer;
+   }
+   .star-rating input[type="radio"]{
+      display: none;
+   }
+   .star-rating input[type="radio"]:checked + .star-icon{
+      color: #dd646e;
+   }
+  </style> 
+
+      <h5 class="mb-4">Leave Comment</h5>
+      <p class="mb-2">Rate the Place</p>
+      <form method="post" action="{{ route('store.review') }}">
+         @csrf
+         <input type="hidden" name="client_id" value="{{ $client->id }}">
+
+      <div class="mb-4">
+         <span class="star-rating">
+            <label for="rating-1">
+            <input type="radio" name="rating" id="rating-1" value="1" hidden><i class="icofont-ui-rating icofont-2x star-icon"></i></label>
+
+            <label for="rating-2">
+            <input type="radio" name="rating" id="rating-2" value="2" hidden><i class="icofont-ui-rating icofont-2x star-icon"></i></label>
+            <label for="rating-3">
+            <input type="radio" name="rating" id="rating-3" value="3" hidden><i class="icofont-ui-rating icofont-2x star-icon"></i></label>
+
+            <label for="rating-4">
+            <input type="radio" name="rating" id="rating-4" value="4" hidden><i class="icofont-ui-rating icofont-2x star-icon"></i></label>
+
+            <label for="rating-5">
+            <input type="radio" name="rating" id="rating-5" value="5" hidden><i class="icofont-ui-rating icofont-2x star-icon"></i></label> 
+        
+        
+         </span>
+      </div>
+      
+         <div class="form-group">
+            <label>Your Comment</label>
+            <textarea class="form-control" name="comment" id="comment"></textarea>
+         </div>
+         <div class="form-group">
+            <button class="btn btn-primary btn-sm" type="submit"> Submit Comment </button>
+         </div>
+      </form>
+
+   @endguest
+   </div>
                    </div>
                 </div>
              </div>
           </div>
 
-          @php
+   @php
       use Carbon\Carbon;
       $coupon = App\Models\Coupon::where('client_id',$client->id)->where('validity','>=', Carbon::now()->format('Y-m-d'))->latest()->first();
    @endphp
+
           <div class="col-md-4">
              <div class="pb-2">
              <div class="bg-white rounded shadow-sm text-white mb-4 p-4 clearfix restaurant-detailed-earn-pts card-icon-overlap">
                 <img class="img-fluid float-left mr-3" src="{{ asset('frontend/img/earn-score-icon.png') }}">
                 <h6 class="pt-0 text-primary mb-1 font-weight-bold">OFFER</h6>
-                   {{-- <pre>{{ print_r(Session::get('coupon'), true) }}</pre> --}}
-               @if ($coupon == NULL)
+
+     {{-- <pre>{{ print_r(Session::get('coupon'), true) }}</pre> --}}
+              
+                @if ($coupon == NULL)
                 <p class="mb-0">No Coupon is Available </p>
                 @else
                 <p class="mb-0">{{ $coupon->discount }}% off on orders above $99 | Use coupon <span class="text-danger font-weight-bold">{{ $coupon->coupon_name }}</span></p>
                 @endif
+               
                 <div class="icon-overlap">
                    <i class="icofont-sale-discount"></i>
                 </div>
@@ -468,14 +518,18 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
          </div>
       </div>
       @endforeach
-      @endif  
-      </div>
-       @if (Session::has('coupon'))
+      @endif
+
+                   
+     </div>
+
+   @if (Session::has('coupon'))
    <div class="mb-2 bg-white rounded p-2 clearfix">
       <p class="mb-1">Item Total <span class="float-right text-dark">{{ count((array) session('cart')) }}</span></p>
       
-       <p class="mb-1">Coupon Name <span class="float-right text-dark">{{ (session()->get('coupon')['coupon_name']) }} ( {{ (session()->get('coupon')['discount']) }} %) </span>
+      <p class="mb-1">Coupon Name <span class="float-right text-dark">{{ (session()->get('coupon')['coupon_name']) }} ( {{ (session()->get('coupon')['discount']) }} %) </span>
       <a type="submit" onclick="couponRemove()"><i class="icofont-ui-delete float-right" style="color: red;"></i></a>
+      </p>
 
        
       <p class="mb-1 text-success">Total Discount 
@@ -497,9 +551,9 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
       ${{ $total }}
       @endif</span></h6>
    </div>
-      
+       
    @else 
-       <div class="mb-2 bg-white rounded p-2 clearfix">
+     <div class="mb-2 bg-white rounded p-2 clearfix">
       <div class="input-group input-group-sm mb-2">
          <input type="text" class="form-control" placeholder="Enter promo code" id="coupon_name">
          <div class="input-group-append">
@@ -507,10 +561,13 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
          </div>
       </div> 
    </div>
-    @endif
+   @endif
+
+
+
    <div class="mb-2 bg-white rounded p-2 clearfix">
       <img class="img-fluid float-left" src="{{ asset('frontend/img/wallet-icon.png') }}">
-       <h6 class="font-weight-bold text-right mb-2">Subtotal : <span class="text-danger"> 
+      <h6 class="font-weight-bold text-right mb-2">Subtotal : <span class="text-danger"> 
          @if (Session::has('coupon'))
          ${{ Session()->get('coupon')['discount_amount'] }}
          @else
@@ -520,6 +577,7 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
       <p class="seven-color mb-1 text-right">Extra charges may apply</p>
       
    </div>
+
                 <a href="{{ route('checkout') }}" class="btn btn-success btn-block btn-lg">Checkout <i class="icofont-long-arrow-right"></i></a>
              </div>
              
@@ -536,6 +594,7 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
 
  <script>
    $(document).ready(function() {
+      
       const Toast = Swal.mixin({
          toast: true,
          position: 'top-end',
@@ -579,12 +638,13 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
                quantity: quantity
             },
             success: function(response){
-              Toast.fire({
+               Toast.fire({
                   icon: 'success',
                   title: 'Quantity Updated'
                }).then(() => {
                   location.reload();
                });
+
             }
          })
       }
@@ -598,12 +658,14 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
                id: id
             },
             success: function(response){
+
                Toast.fire({
                   icon: 'success',
                   title: 'Cart Remove Successfully'
                }).then(() => {
                   location.reload();
                });
+
             }
          });
       }
