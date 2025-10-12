@@ -15,6 +15,8 @@ use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Admin\ManageOrderController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Frontend\ReviewController;
+use App\Http\Controllers\Frontend\FilterController;
+
 
 
 
@@ -212,4 +214,8 @@ Route::controller(OrderController::class)->group(function () {
 });
 Route::controller(ReviewController::class)->group(function () {
     Route::post('/store/review', 'StoreReview')->name('store.review');
+});
+
+Route::controller(FilterController::class)->group(function () {
+    Route::get('/list/restaurant', 'ListRestaurant')->name('list.restaurant');
 });
