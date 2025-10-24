@@ -84,7 +84,7 @@
             $total += $details['price'] * $details['quantity']
          @endphp 
            
-         <p class="mb-2"><i class="icofont-ui-press text-danger food-item"></i>{{ $details['name'] }} x {{  $details['quantity'] }}   <span class="float-right text-secondary">${{ $details['price'] * $details['quantity'] }}</span></p>
+         <p class="mb-2"><i class="icofont-ui-press text-danger food-item"></i>{{ $details['name'] }} x {{  $details['quantity'] }}   <span class="float-right text-secondary">{{ $details['price'] * $details['quantity'] }}Tk</span></p>
          @endforeach
          @endif
              
@@ -92,9 +92,9 @@
          <div class="dropdown-cart-top-footer border-top p-4">
              <p class="mb-0 font-weight-bold text-secondary">Sub Total <span class="float-right text-dark"> 
                @if (Session::has('coupon'))
-               ${{ Session()->get('coupon')['discount_amount'] }}
+               {{ Session()->get('coupon')['discount_amount'] }}Tk
                @else
-               ${{ $total }}
+               {{ $total }}Tk
                @endif</span></p>
          </div>
          <div class="dropdown-cart-top-footer border-top p-2">

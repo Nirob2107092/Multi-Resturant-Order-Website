@@ -53,10 +53,10 @@ class OrderController extends Controller
             'payment_type' => 'Cash On Delivery',
             'payment_method' => 'Cash On Delivery',
 
-            'currency' => 'USD',
+            'currency' => 'Taka',
             'amount' => $totalAmount,
             'total_amount' => $tt,
-            'invoice_no' => 'easyshop' . mt_rand(10000000, 99999999),
+            'invoice_no' => 'LunchPuffin' . mt_rand(10000000, 99999999),
             'order_date' => Carbon::now()->format('d F Y'),
             'order_month' => Carbon::now()->format('F'),
             'order_year' => Carbon::now()->format('Y'),

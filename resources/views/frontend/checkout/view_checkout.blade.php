@@ -19,7 +19,7 @@
         <h4 class="mb-1">Choose a delivery address</h4>
         <h6 class="mb-3 text-black-50">Multiple addresses in this location</h6>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="bg-white card addresses-item mb-4 border border-success">
                 <div class="gold-members p-4">
                     <div class="media">
@@ -37,23 +37,7 @@
                 </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="bg-white card addresses-item mb-4">
-                <div class="gold-members p-4">
-                    <div class="media">
-                        <div class="mr-3"><i class="icofont-briefcase icofont-3x"></i></div>
-                        <div class="media-body">
-                            <h6 class="mb-1 text-secondary">Work</h6>
-                            <p>NCC, Model Town Rd Town, Ludhiana, Punjab 141002, India
-                            </p>
-                            <p class="mb-0 text-black font-weight-bold"><a class="btn btn-sm btn-secondary mr-2" href="#"> DELIVER HERE</a> 
-                            <span>40MIN</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
+            
         </div>
         
     </div>
@@ -176,7 +160,7 @@
       @endphp
 
    <div class="gold-members p-2 border-bottom">
-         <p class="text-gray mb-0 float-right ml-2">${{ $details['price'] * $details['quantity'] }}</p>
+         <p class="text-gray mb-0 float-right ml-2">{{ $details['price'] * $details['quantity'] }}Tk</p>
          <span class="count-number float-right">
         
         <button class="btn btn-outline-secondary  btn-sm left dec" data-id="{{ $id }}" > <i class="icofont-minus"></i> </button>
@@ -213,9 +197,9 @@
          <span class="float-right text-success">
 
             @if (Session::has('coupon'))
-               ${{ $total - Session()->get('coupon')['discount_amount'] }}
+               {{ $total - Session()->get('coupon')['discount_amount'] }}Tk
             @else
-            ${{ $total }}
+            {{ $total }}Tk
             @endif
            
          </span>
@@ -223,9 +207,9 @@
       <hr />
       <h6 class="font-weight-bold mb-0">TO PAY  <span class="float-right">
       @if (Session::has('coupon'))
-      ${{ Session()->get('coupon')['discount_amount'] }}
+      {{ Session()->get('coupon')['discount_amount'] }}Tk
       @else
-      ${{ $total }}
+      {{ $total }}Tk
       @endif</span></h6>
    </div>
       
@@ -243,11 +227,11 @@
     
      
 
-        <a href="thanks.html" class="btn btn-success btn-block btn-lg">PAY  
+        <a href="{{ route('cash_order') }}" class="btn btn-success btn-block btn-lg">PAY  
             @if (Session::has('coupon'))
-            ${{ Session()->get('coupon')['discount_amount'] }}
+            {{ Session()->get('coupon')['discount_amount'] }}Tk
             @else
-            ${{ $total }}
+            {{ $total }}Tk
             @endif
         <i class="icofont-long-arrow-right"></i></a>
         </div>
