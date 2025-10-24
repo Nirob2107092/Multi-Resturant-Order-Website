@@ -143,13 +143,7 @@ Route::middleware('admin')->group(function () {
         Route::post('/admin/search/byyear', 'AminSearchByYear')->name('admin.search.byyear');
     });
 
-    Route::controller(ReportController::class)->group(function () {
-        Route::get('/client/all/reports', 'ClientAllReports')->name('client.all.reports');
-        Route::post('/client/search/bydate', 'ClientSearchByDate')->name('client.search.bydate');
-        Route::post('/client/search/bymonth', 'ClientSearchByMonth')->name('client.search.bymonth');
-        Route::post('/client/search/byyear', 'ClientSearchByYear')->name('client.search.byyear');
-    });
-
+ 
     Route::controller(ReviewController::class)->group(function () {
         Route::get('/admin/pending/review', 'AdminPendingReview')->name('admin.pending.review');
         Route::get('/admin/approve/review', 'AdminApproveReview')->name('admin.approve.review');
@@ -198,6 +192,15 @@ Route::middleware(['client', 'status'])->group(function () {
     Route::controller(ManageOrderController::class)->group(function () {
         Route::get('/all/client/orders', 'AllClientOrders')->name('all.client.orders');
         Route::get('/client/order/details/{id}', 'ClientOrderDetails')->name('client.order.details');
+    });
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('/client/all/reports', 'ClientAllReports')->name('client.all.reports');
+        Route::post('/client/search/bydate', 'ClientSearchByDate')->name('client.search.bydate');
+        Route::post('/client/search/bymonth', 'ClientSearchByMonth')->name('client.search.bymonth');
+        Route::post('/client/search/byyear', 'ClientSearchByYear')->name('client.search.byyear');
+    });
+    Route::controller(ReviewController::class)->group(function () {
+        Route::get('/client/all/reviews', 'ClientAllReviews')->name('client.all.reviews');
     });
 });
 // End Client Middleware
