@@ -15,10 +15,29 @@ use App\Models\Admin;
 use App\Notifications\OrderComplete;
 use Illuminate\Support\Facades\Notification;
 
-
-
 class OrderController extends Controller
 {
+    public function SetDeliveryAddress(Request $request)
+    {
+        $request->validate([
+            'address' => 'required|string|max:500'
+        ]);
+
+        session([
+            'delivery_address' => $request->address,
+            'delivery_lat' => $request->latitude ?? null,
+            'delivery_lng' => $request->longitude ?? null,
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Address updated']);
+    }
+
+    public function ClearDeliveryAddress()
+    {
+        session()->forget(['delivery_address', 'delivery_lat', 'delivery_lng']);
+        return response()->json(['success' => true]);
+    }
+
     public function CashOrder(Request $request)
     {
         $user = Admin::where('role', 'admin')->get();
@@ -50,6 +69,8 @@ class OrderController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'payment_type' => 'Cash On Delivery',
             'payment_method' => 'Cash On Delivery',
 
@@ -84,6 +105,9 @@ class OrderController extends Controller
         if (Session::has('cart')) {
             Session::forget('cart');
         }
+        // Clear delivery address session after order
+        session()->forget(['delivery_address', 'delivery_lat', 'delivery_lng']);
+
         // Send Notification to admin
         Notification::send($user, new OrderComplete($request->name));
         $notification = array(

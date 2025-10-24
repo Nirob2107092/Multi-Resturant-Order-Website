@@ -17,7 +17,7 @@
                             
                          </div>
                       </div>
-                      <div class="col-lg-7 col-md-7 col-sm-12 form-group">
+                      <div class="col-lg-10 col-md-7 col-sm-12 form-group">
                          <input type="text" placeholder="Enter your delivery location" class="form-control form-control-lg">
                          <a class="locate-me" href="#"><i class="icofont-ui-pointer"></i> Locate Me</a>
                       </div>
@@ -28,7 +28,7 @@
                    </div>
                 </form>
              </div>
-             <h6 class="mt-4 text-shadow text-white font-weight-normal">E.g. Beverages, Pizzas, Chinese, Bakery, Indian...</h6>
+             <h6 class="mt-4 text-shadow text-white font-weight-normal">E.g. Beverages, Pizzas, Chinese, Bakery, Bengali...</h6>
              <div class="owl-carousel owl-carousel-category owl-theme">
     @php
        $products = App\Models\Product::latest()->limit(8)->get();

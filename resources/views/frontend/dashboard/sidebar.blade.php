@@ -12,7 +12,7 @@
                    <h6 class="mb-2">{{$profileData->name}}</h6>
                    <p class="mb-1">{{$profileData->phone}}</p>
                    <p>{{$profileData->email}}</p>
-                   <p class="mb-0 text-black font-weight-bold"><a class="text-primary mr-3" data-toggle="modal" data-target="#edit-profile-modal" href="#"><i class="icofont-ui-edit"></i> EDIT</a></p>
+                   <p class="mb-0 text-black font-weight-bold"><a class="text-primary mr-3" data-toggle="modal" data-target="#edit-profile-modal" href="rout"><i class="icofont-ui-edit"></i> Welcome</a></p>
                 </div>
              </div>
           </div>
