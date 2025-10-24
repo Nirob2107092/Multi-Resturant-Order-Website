@@ -1,5 +1,4 @@
-
-      <nav class="navbar navbar-expand-lg navbar-light bg-light osahan-nav shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-light osahan-nav shadow-sm">
          <div class="container">
             <a class="navbar-brand" href="{{ route('index') }}"><img alt="logo" src="{{ asset('frontend/img/asd.png') }}"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,15 +9,12 @@
                   <li class="nav-item active">
                      <a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
                   </li>
+                  
                   <li class="nav-item">
-                     <a class="nav-link" href="offers.html"><i class="icofont-sale-discount"></i> Offers <span class="badge badge-danger">New</span></a>
-                  </li>
-                  <li class="nav-item dropdown">
-                      <a class="nav-link" href="{{ route('list.restaurant') }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     Restaurants
-                     </a>
-                     
-                  </li>
+  <a class="nav-link" href="{{ route('list.restaurant') }}">
+    Items
+  </a>
+</li>
                   @auth
                   @php
                   $id = Auth::user()->id;

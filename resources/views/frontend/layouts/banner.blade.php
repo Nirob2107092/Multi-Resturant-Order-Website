@@ -14,14 +14,7 @@
                       <div class="col-lg-3 col-md-3 col-sm-12 form-group">
                          <div class="location-dropdown">
                             <i class="icofont-location-arrow"></i>
-                            <select class="custom-select form-control-lg">
-                               <option> Quick Searches </option>
-                               <option> Breakfast </option>
-                               <option> Lunch </option>
-                               <option> Dinner </option>
-                               <option> Cafés </option>
-                               <option> Delivery </option>
-                            </select>
+                            
                          </div>
                       </div>
                       <div class="col-lg-7 col-md-7 col-sm-12 form-group">
@@ -46,7 +39,7 @@
                       <a href="#">
                          <img class="img-fluid" src="{{ asset($product->image ) }}" alt="">
                          <h6>{{ Str::limit($product->name, 8)  }}</h6>
-                         <p>${{ $product->price }}</p>
+                         <p>{{ $product->price }}Tk</p>
                       </a>
                    </div>
                 </div>

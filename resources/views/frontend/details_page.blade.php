@@ -33,7 +33,7 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
                 <div class="restaurant-detailed-header-right text-right">
                    <button class="btn btn-success" type="button"><i class="icofont-clock-time"></i> 25–35 min
                    </button>
-                   <h6 class="text-white mb-0 restaurant-detailed-ratings"><span class="generator-bg rounded text-white"><i class="icofont-star"></i> 3.1</span> 23 Ratings  <i class="ml-3 icofont-speech-comments"></i> 91 reviews</h6>
+                   <h6 class="text-white mb-0 restaurant-detailed-ratings"><span class="generator-bg rounded text-white"><i class="icofont-star"></i>{{ $roundedAverageRating }}</span> {{ $ratingSum }} Ratings  <i class="ml-3 icofont-speech-comments"></i> {{ $totalReviews }} reviews</h6>
                 </div>
              </div>
           </div>
@@ -80,7 +80,7 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
         $populers = App\Models\Product::where('status',1)->where('client_id',$client->id)->where('most_populer',1)->orderBy('id','desc')->limit(5)->get();
     @endphp                
     <div id="#menu" class="bg-white rounded shadow-sm p-4 mb-4 explore-outlets"> 
-        <h6 class="mb-3">Most Popular  <span class="badge badge-success"><i class="icofont-tags"></i> 15% Off All Items </span></h6>
+        <h6 class="mb-3">Most Popular  <span class="badge badge-success"><i class="icofont-tags"></i>Your Favorites, Now at a Better Price </span></h6>
         <div class="owl-carousel owl-theme owl-carousel-five offers-interested-carousel mb-3">
        
        @foreach ($populers as $populer) 
@@ -90,9 +90,9 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
                     <img class="img-fluid" src="{{ asset($populer->image) }}">
                     <h6>{{ $populer->name }}</h6>
                     @if ($populer->discount_price == NULL)
-                        ${{$populer->price}}
+                        {{ $populer->price }}Tk
                     @else
-                    $<del>{{$populer->price}}</del> ${{$populer->discount_price}}
+                    <del>{{ $populer->price }}Tk</del> {{ $populer->discount_price }}Tk
                     @endif
                     <span class="float-right">
                      <a class="btn btn-outline-secondary btn-sm" href="{{ route('add_to_cart',$populer->id)}}">ADD</a> 
@@ -130,10 +130,10 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
                    
                     <p class="text-gray time mb-0">
                         @if ($bestseller->discount_price == NULL)
-                        <a class="btn btn-link btn-sm text-black" href="#">${{$bestseller->price}}  </a> 
+                        <a class="btn btn-link btn-sm text-black" href="#">{{$bestseller->price}}Tk  </a> 
                     @else
                     $<del>{{$bestseller->price}}</del> 
-                    <a class="btn btn-link btn-sm text-black" href="#">${{$bestseller->discount_price}}  </a> 
+                    <a class="btn btn-link btn-sm text-black" href="#">{{$bestseller->discount_price}}Tk  </a> 
                     
                     @endif 
                         <span class="float-right"> 
@@ -164,7 +164,7 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
                     <img class="mr-3 rounded-pill" src="{{ asset($product->image) }}" alt="Generic placeholder image">
                     <div class="media-body">
                     <h6 class="mb-1">{{$product->name}}</h6>
-                    <p class="text-gray mb-0">${{ $product->price }} ({{ $product->size ?? '' }} cm)</p>
+                    <p class="text-gray mb-0">{{ $product->price }}Tk ({{ $product->size ?? '' }} )</p>
                   
                     </div>
                 </div>
@@ -202,7 +202,11 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
         <div id="restaurant-info" class="bg-white rounded shadow-sm p-4 mb-4">
             <div class="address-map float-right ml-5">
             <div class="mapouter">
-                <div class="gmap_canvas"><iframe width="300" height="170" id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=9&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div>
+                @php
+            $address = urlencode($client->address ?? 'No address available');
+            
+        @endphp
+                <div class="gmap_canvas"><iframe width="300" height="170" id="gmap_canvas" src="https://maps.google.com/maps?q={{ $address }}&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div>
             </div>
             </div>
             <h5 class="mb-4">Restaurant Info</h5>
@@ -215,62 +219,20 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
             <span class="badge badge-success"> OPEN NOW </span>
             </p>
             <hr class="clearfix">
-            <p class="text-black mb-0">You can also check the 3D view by using our menue map clicking here &nbsp;&nbsp;&nbsp; <a class="text-info font-weight-bold" href="#">Venue Map</a></p>
+            <p class="text-black mb-0">You can also check the 3D view by using our menue map clicking here &nbsp;&nbsp;&nbsp; <a class="text-info font-weight-bold" href="https://www.google.com/maps/search/?api=1&query={{ urlencode($client->address ?? '') }}">Venue Map</a></p>
             <hr class="clearfix">
-            <h5 class="mt-4 mb-4">More Info</h5>
-            <p class="mb-3">Dal Makhani, Panneer Butter Masala, Kadhai Paneer, Raita, Veg Thali, Laccha Paratha, Butter Naan</p>
             <div class="border-btn-main mb-4">
             <a class="border-btn text-success mr-2" href="#"><i class="icofont-check-circled"></i> Breakfast</a>
             <a class="border-btn text-danger mr-2" href="#"><i class="icofont-close-circled"></i> No Alcohol Available</a>
-            <a class="border-btn text-success mr-2" href="#"><i class="icofont-check-circled"></i> Vegetarian Only</a>
+            <a class="border-btn text-success mr-2" href="#"><i class="icofont-check-circled"></i> Order</a>
+            <a class="border-btn text-success mr-2" href="#"><i class="icofont-check-circled"></i> Takeway</a>
             <a class="border-btn text-success mr-2" href="#"><i class="icofont-check-circled"></i> Indoor Seating</a>
             <a class="border-btn text-success mr-2" href="#"><i class="icofont-check-circled"></i> Breakfast</a>
-            <a class="border-btn text-danger mr-2" href="#"><i class="icofont-close-circled"></i> No Alcohol Available</a>
-            <a class="border-btn text-success mr-2" href="#"><i class="icofont-check-circled"></i> Vegetarian Only</a>
+            <a class="border-btn text-danger mr-2" href="#"><i class="icofont-close-circled"></i> No Smoking</a>
+            <a class="border-btn text-success mr-2" href="#"><i class="icofont-check-circled"></i>Dinner</a>
             </div>
         </div>
     </div>
-
-
-
-                   <div class="tab-pane fade" id="pills-book" role="tabpanel" aria-labelledby="pills-book-tab">
-                      <div id="book-a-table" class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
-                         <h5 class="mb-4">Book A Table</h5>
-                         <form>
-                            <div class="row">
-                               <div class="col-sm-6">
-                                  <div class="form-group">
-                                     <label>Full Name</label>
-                                     <input class="form-control" type="text" placeholder="Enter Full Name">
-                                  </div>
-                               </div>
-                               <div class="col-sm-6">
-                                  <div class="form-group">
-                                     <label>Email Address</label>
-                                     <input class="form-control" type="text" placeholder="Enter Email address">
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="row">
-                               <div class="col-sm-6">
-                                  <div class="form-group">
-                                     <label>Mobile number</label>
-                                     <input class="form-control" type="text" placeholder="Enter Mobile number">
-                                  </div>
-                               </div>
-                               <div class="col-sm-6">
-                                  <div class="form-group">
-                                     <label>Date And Time</label>
-                                     <input class="form-control" type="text" placeholder="Enter Date And Time">
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="form-group text-right">
-                               <button class="btn btn-primary" type="button"> Submit </button>
-                            </div>
-                         </form>
-                      </div>
-                   </div>
                    <div class="tab-pane fade" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab">
                       
    <div class="bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
@@ -323,7 +285,7 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
    }
    </style>  
    @php
-      $reviews = App\Models\Review::where('client_id',$client->id)->where('status',1)->latest()->limit(5)->get();
+      $reviews = App\Models\Review::where('client_id',$client->id)->latest()->limit(5)->get();
    @endphp   
       
       @foreach ($reviews as $review)
@@ -352,7 +314,7 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
                   <p> {{ $review->comment }} </p>
                </div>
                <div class="reviews-members-footer">
-                  <a class="total-like" href="#"><i class="icofont-thumbs-up"></i> 856M</a> <a class="total-like" href="#"><i class="icofont-thumbs-down"></i> 158K</a> 
+                  
                   
                </div>
             </div>
@@ -467,7 +429,7 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
       @endphp
 
    <div class="gold-members p-2 border-bottom">
-         <p class="text-gray mb-0 float-right ml-2">${{ $details['price'] * $details['quantity'] }}</p>
+         <p class="text-gray mb-0 float-right ml-2">{{ $details['price'] * $details['quantity'] }}Tk</p>
          <span class="count-number float-right">
         
         <button class="btn btn-outline-secondary  btn-sm left dec" data-id="{{ $id }}" > <i class="icofont-minus"></i> </button>
@@ -504,9 +466,9 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
          <span class="float-right text-success">
 
             @if (Session::has('coupon'))
-               ${{ $total - Session()->get('coupon')['discount_amount'] }}
+              {{ $total - Session()->get('coupon')['discount_amount'] }}Tk
             @else
-            ${{ $total }}
+            {{ $total }}Tk
             @endif
            
          </span>
@@ -514,9 +476,9 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
       <hr />
       <h6 class="font-weight-bold mb-0">TO PAY  <span class="float-right">
       @if (Session::has('coupon'))
-      ${{ Session()->get('coupon')['discount_amount'] }}
+      {{ Session()->get('coupon')['discount_amount'] }}Tk
       @else
-      ${{ $total }}
+      {{ $total }}Tk
       @endif</span></h6>
    </div>
        
@@ -537,9 +499,9 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
       <img class="img-fluid float-left" src="{{ asset('frontend/img/wallet-icon.png') }}">
       <h6 class="font-weight-bold text-right mb-2">Subtotal : <span class="text-danger"> 
          @if (Session::has('coupon'))
-         ${{ Session()->get('coupon')['discount_amount'] }}
+         {{ Session()->get('coupon')['discount_amount'] }}Tk
          @else
-         ${{ $total }}
+         {{ $total }}Tk
          @endif
       </span></h6>
       <p class="seven-color mb-1 text-right">Extra charges may apply</p>

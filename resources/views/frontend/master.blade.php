@@ -65,7 +65,10 @@
          });
 
       function addWishList(id){
-                  //alert(id)
+                    console.log('addWishList called with id:', id);
+    console.log('jQuery loaded:', typeof $ !== 'undefined');
+    console.log('Swal loaded:', typeof Swal !== 'undefined');
+    console.log('CSRF token:', $('meta[name="csrf-token"]').attr('content'));
          $.ajax({
             type: "POST",
             dataType:"json",

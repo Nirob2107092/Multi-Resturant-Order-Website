@@ -25,7 +25,7 @@ class HomeController extends Controller
             return $menu->products->isNotEmpty();
         });
         $gallerys = Gllery::where('client_id', $id)->get();
-        $reviews = Review::where('client_id', $client->id)->where('status', 1)->get();
+        $reviews = Review::where('client_id', $client->id)->get();
         $totalReviews = $reviews->count();
         $ratingSum = $reviews->sum('rating');
         $averageRating = $totalReviews > 0 ? $ratingSum / $totalReviews : 0;
@@ -42,7 +42,7 @@ class HomeController extends Controller
             return $totalReviews > 0 ? ($count / $totalReviews) * 100 : 0;
         }, $ratingCounts);
 
-        return view('frontend.details_page', compact('client', 'menus', 'gallerys', 'reviews', 'roundedAverageRating', 'totalReviews', 'ratingCounts', 'ratingPercentages'));
+        return view('frontend.details_page', compact('client', 'menus', 'gallerys', 'reviews', 'roundedAverageRating', 'totalReviews', 'ratingCounts', 'ratingPercentages','ratingSum'));
     }
     //End Method 
     public function AddWishList(Request $request, $id)

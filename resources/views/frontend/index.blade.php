@@ -1,5 +1,7 @@
 @extends('frontend.master')
 @section('content')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <section class="section pt-5 pb-5 products-section">
     <div class="container">
        <div class="section-header text-center">
@@ -25,8 +27,8 @@
   @endphp
 
      @php
-        $reviewcount = App\Models\Review::where('client_id',$client->id)->where('status',1)->latest()->get();
-        $avarage = App\Models\Review::where('client_id',$client->id)->where('status',1)->avg('rating');
+        $reviewcount = App\Models\Review::where('client_id',$client->id)->latest()->get();
+        $avarage = App\Models\Review::where('client_id',$client->id)->avg('rating');
      @endphp
 
    <div class="col-md-3">  
@@ -34,7 +36,7 @@
             <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
                <div class="list-card-image">
                   <div class="star position-absolute"><span class="badge badge-success"><i class="icofont-star"></i>{{ number_format($avarage,1) }} ({{ count($reviewcount ) }}+)</span></div>
-                  <div class="favourite-heart text-danger position-absolute"><a aria-label="Add to Wishlist" onclick="addWishList({{$client->id}})" ><i class="icofont-heart"></i></a></div>
+                  <div class="favourite-heart text-danger position-absolute"><a href="javascript:void(0);" aria-label="Add to Wishlist" onclick="addWishList({{$client->id}})" ><i class="icofont-heart"></i></a></div>
                   @if ($coupons)
                   <div class="member-plan position-absolute"><span class="badge badge-dark">Promoted</span></div>
                   @else

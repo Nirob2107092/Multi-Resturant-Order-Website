@@ -2,8 +2,17 @@
 <div class="col-md-4 col-sm-6 mb-4 pb-2">
   <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
     <div class="list-card-image">
+      @php
+        $stats = isset($ratingStatsByClient) && $ratingStatsByClient instanceof \Illuminate\Support\Collection
+            ? $ratingStatsByClient->get($product->client_id)
+            : null;
+        $avg   = $stats ? number_format((float)$stats->avg_rating, 1) : '0.0';
+        $count = $stats->total_ratings ?? 0;
+      @endphp
       <div class="star position-absolute">
-        <span class="badge badge-success"><i class="icofont-star"></i> 3.1 (300+)</span>
+        <span class="badge badge-success">
+          <i class="icofont-star"></i> {{ $avg }} ({{ $count }})
+        </span>
       </div>
       <div class="favourite-heart text-danger position-absolute">
         <a href="{{ route('res.details',$product->client_id) }}"><i class="icofont-heart"></i></a>

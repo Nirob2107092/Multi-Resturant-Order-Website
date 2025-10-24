@@ -54,7 +54,7 @@
                 <td>{{ $key+1 }}</td>
                 <td>{{ $order->order_date }}</td>
                 <td>{{ $order->invoice_no }}</td>
-                <td>${{ $order->amount }}</td>
+                <td>{{ $order->amount }}Tk</td>
                 <td>{{ $order->payment_method }}</td>
                 <td>
                     @if ($order->status == 'Pending')

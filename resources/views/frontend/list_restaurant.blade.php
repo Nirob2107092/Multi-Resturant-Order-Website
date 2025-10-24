@@ -20,9 +20,6 @@
                    <a class="dropdown-item" href="#">Rating</a>
                 </div>
              </div>
-             <h4 class="font-weight-bold mt-0 mb-3">OFFERS <small class="h6 mb-0 ml-2">299 restaurants
-                </small>
-             </h4>
           </div>
        </div>
        <div class="row">
@@ -142,18 +139,9 @@ $menus = App\Models\Menu::orderBy('id','desc')->limit(10)->get();
    </div>  
 </div>
 </div>
-
-
-
-
-
-
-
-
-
-             </div>
+</div>
             
-          </div>
+</div>
           <div class="col-md-9">
             
              <div class="row" id="product-list">
@@ -162,7 +150,7 @@ $menus = App\Models\Menu::orderBy('id','desc')->limit(10)->get();
 <div class="col-md-4 col-sm-6 mb-4 pb-2">
   <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
     <div class="list-card-image">
-        <div class="star position-absolute"><span class="badge badge-success"><i class="icofont-star"></i> 3.1 (300+)</span></div>
+       
         <div class="favourite-heart text-danger position-absolute"><a href="{{ route('res.details',$product->client_id) }}"><i class="icofont-heart"></i></a></div>
         <div class="member-plan position-absolute"><span class="badge badge-dark">Promoted</span></div>
         <a href="{{ route('res.details',$product->client_id) }}">

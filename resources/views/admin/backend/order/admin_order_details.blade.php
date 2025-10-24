@@ -101,7 +101,7 @@
             </tr> 
             <tr> 
                 <th width="50%">Order Amount: </th>
-                <td>${{ $order->amount }}</td> 
+                <td>{{ $order->amount }}Tk</td> 
             </tr> 
             <tr> 
                 <th width="50%">Order Status: </th>
