@@ -79,12 +79,13 @@
                 <label for="example-text-input" class="form-label">Phone</label>
                 <input class="form-control" name="phone" type="text" value="{{ $profileData->phone }}" id="example-text-input">
             </div>
+
             <div class="mb-3">
                 <label for="example-text-input" class="form-label">City</label>
             <select name="city_id" class="form-select">
             <option>Select</option>
             @foreach ($city as $cit)
-             <option value="{{ $cit->id }}" {{ $cit->id == $profileData->city_id ? 'selected' : '' }} >{{ $cit->city_name }}</option>
+            <option value="{{ $cit->id }}" {{ $cit->id == $profileData->city_id ? 'selected' : '' }} >{{ $cit->city_name }}</option>
             @endforeach 
         </select>
             </div>
@@ -96,11 +97,10 @@
 
             <div class="mb-3">
                 <label for="example-text-input" class="form-label">Cover Photo </label>
-                 <input class="form-control" name="cover_photo" type="file"  id="image" >
+                <input class="form-control" name="cover_photo" type="file"  id="cover_image" >
             </div>
            
-            <img id="showImage" src="{{ (!empty($profileData->cover_photo)) ? url('upload/client_images/'.$profileData->cover_photo) : url('upload/no_image.jpg') }}" alt="" class="p-1 bg-primary" width="210" height="100">
-
+            <img id="showCoverImage" src="{{ (!empty($profileData->cover_photo)) ? url('upload/client_images/'.$profileData->cover_photo) : url('upload/no_image.jpg') }}" alt="" class="p-1 bg-primary" width="210" height="100">
               
         </div>
     </div>
@@ -114,11 +114,11 @@
 
             <div class="mb-3">
                 <label for="example-text-input" class="form-label">Profile Image</label>
-                <input class="form-control" name="photo" type="file"  id="image">
+                <input class="form-control" name="photo" type="file"  id="profile_image">
             </div>
             <div class="mb-3">
                  
-                <img id="showImage" src="{{ (!empty($profileData->photo)) ? url('upload/client_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="" class="rounded-circle p-1 bg-primary" width="110">
+                <img id="showProfileImage" src="{{ (!empty($profileData->photo)) ? url('upload/client_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="" class="rounded-circle p-1 bg-primary" width="110">
             </div>
             <div class="mt-4">
                 <button type="submit" class="btn btn-primary waves-effect waves-light">Save Changes</button>
@@ -153,15 +153,22 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $('#image').change(function(e){
+        $('#cover_image').change(function(e){
             var reader = new FileReader();
             reader.onload = function(e){
-                $('#showImage').attr('src',e.target.result);
+                $('#showCoverImage').attr('src',e.target.result);
             }
-            reader.readAsDataURL(e.target.files['0']);
-        })
-    })
+            reader.readAsDataURL(e.target.files[0]);
+        });
 
+        $('#profile_image').change(function(e){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                $('#showProfileImage').attr('src',e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+    });
 </script>
 
 

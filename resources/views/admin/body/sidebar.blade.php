@@ -9,7 +9,7 @@
         <li class="menu-title" data-key="t-menu">Menu</li>
 
         <li>
-            <a href="index.html">
+            <a href="http://127.0.0.1:8000/admin/dashboard">
                 <i data-feather="home"></i>
                 <span data-key="t-dashboard">Dashboard</span>
             </a>
@@ -85,7 +85,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.add.product') }}">
+                    <a href="{{ route('approve.restaurant') }}">
                         <span data-key="t-chat">Approve Restaurant</span>
                     </a>
                 </li>  
@@ -151,31 +151,12 @@
             </ul>
         </li>
 
-        <li>
-            <a href="javascript: void(0);" class="has-arrow">
-                <i data-feather="gift"></i>
-                <span data-key="t-ui-elements">Extended</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="extended-lightbox.html" data-key="t-lightbox">Lightbox</a></li>
-                <li><a href="extended-rangeslider.html" data-key="t-range-slider">Range Slider</a></li>
-                
-            </ul>
-        </li>
+       
   
 
     </ul>
 
-    <div class="card sidebar-alert border-0 text-center mx-4 mb-0 mt-5">
-        <div class="card-body">
-            <img src="assets/images/giftbox.png" alt="">
-            <div class="mt-4">
-                <h5 class="alertcard-title font-size-16">Unlimited Access</h5>
-                <p class="font-size-13">Upgrade your plan from a Free trial, to select ‘Business Plan’.</p>
-               
-            </div>
-        </div>
-    </div>
+   
 </div>
         <!-- Sidebar -->
     </div>

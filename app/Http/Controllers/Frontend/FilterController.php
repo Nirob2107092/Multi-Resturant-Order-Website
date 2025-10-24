@@ -4,41 +4,50 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use App\Models\Coupon;
 use Carbon\Carbon;
 
 class FilterController extends Controller
 {
     public function ListRestaurant()
     {
-        $products = Product::all();
-        return view('frontend.list_restaurant', compact('products'));
+        // Initial products for the first render
+        $products = Product::latest()->get();
+
+        // Active coupons per client (status=1 and not expired)
+        $couponsByClient = Coupon::where('status', '1')
+            ->where('validity', '>=', now()->format('Y-m-d'))
+            ->get()
+            ->keyBy('client_id');
+
+        return view('frontend.list_restaurant', compact('products', 'couponsByClient'));
     }
-    //End Method 
-    public function FilterProducts(Request $request) {
 
-        $categoryId = $request->input('categorys');
-        $menuId = $request->input('menus');
-        $cityId = $request->input('citys');
+    public function FilterProducts(Request $request)
+    {
+        $categoryIds = (array) $request->input('categorys', []);
+        $menuIds     = (array) $request->input('menus', []);
+        $cityIds     = (array) $request->input('citys', []);
 
-        $products = Product::query();
+        $productsQ = Product::query();
 
-        if ($categoryId) {
-            $products->whereIn('category_id', $categoryId);
-        }
-        if ($menuId) {
-            $products->whereIn('menu_id', $menuId);
-        }
-        if ($cityId) {
-            $products->whereIn('city_id', $cityId);
+        if ($categoryIds) $productsQ->whereIn('category_id', $categoryIds);
+        if ($menuIds)     $productsQ->whereIn('menu_id', $menuIds);
+        if ($cityIds) {
+            $productsQ->whereHas('client', function ($q) use ($cityIds) {
+                $q->whereIn('city_id', $cityIds);
+            });
         }
 
-        $filterProducts = $products->get();
+        $filterProducts = $productsQ->latest()->get();
 
-        return view('frontend.product_list', compact('filterProducts'))->render();
+        // Reuse coupons map for the partial
+        $couponsByClient = Coupon::where('status', '1')
+            ->where('validity', '>=', now()->format('Y-m-d'))
+            ->get()
+            ->keyBy('client_id');
+
+        return view('frontend.product_list', compact('filterProducts', 'couponsByClient'))->render();
     }
-    //End Method 
-
-
 }

@@ -46,8 +46,7 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
        <div class="row">
           <div class="col-md-12">
              <span class="restaurant-detailed-action-btn float-right">
-             <button class="btn btn-light btn-sm border-light-btn" type="button"><i class="icofont-heart text-danger"></i> Mark as Favourite</button>
-             <button class="btn btn-light btn-sm border-light-btn" type="button"><i class="icofont-cauli-flower text-success"></i>  Pure Veg</button>
+             
              <button class="btn btn-outline-danger btn-sm" type="button"><i class="icofont-sale-discount"></i>  OFFERS</button>
              </span>
              <ul class="nav" id="pills-tab" role="tablist">
@@ -60,9 +59,7 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
                 <li class="nav-item">
                    <a class="nav-link" id="pills-restaurant-info-tab" data-toggle="pill" href="#pills-restaurant-info" role="tab" aria-controls="pills-restaurant-info" aria-selected="false">Restaurant Info</a>
                 </li>
-                <li class="nav-item">
-                   <a class="nav-link" id="pills-book-tab" data-toggle="pill" href="#pills-book" role="tab" aria-controls="pills-book" aria-selected="false">Book A Table</a>
-                </li>
+                
                 <li class="nav-item">
                    <a class="nav-link" id="pills-reviews-tab" data-toggle="pill" href="#pills-reviews" role="tab" aria-controls="pills-reviews" aria-selected="false">Ratings & Reviews</a>
                 </li>
@@ -275,22 +272,49 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
                       </div>
                    </div>
                    <div class="tab-pane fade" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab">
-                      <div id="ratings-and-reviews" class="bg-white rounded shadow-sm p-4 mb-4 clearfix restaurant-detailed-star-rating">
-                         <span class="star-rating float-right">
-                         <a href="#"><i class="icofont-ui-rating icofont-2x active"></i></a>
-                         <a href="#"><i class="icofont-ui-rating icofont-2x active"></i></a>
-                         <a href="#"><i class="icofont-ui-rating icofont-2x active"></i></a>
-                         <a href="#"><i class="icofont-ui-rating icofont-2x active"></i></a>
-                         <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                         </span>
-                         <h5 class="mb-0 pt-1">Rate this Place</h5>
-                      </div>
-                      <div class="bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
+                      
+   <div class="bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
+      <h5 class="mb-4">Ratings and Reviews</h5>
+     
+   <div class="graph-star-rating-header">
+         <div class="star-rating">
+            @for ($i = 1; $i <= 5; $i++)
+            <a href="#"><i class="icofont-ui-rating {{ $i <= round($roundedAverageRating) ? 'active' : ''}}"></i></a>
+            @endfor
+              <b class="text-black ml-2">{{ $totalReviews }}</b>
+         </div>
+         <p class="text-black mb-4 mt-2">Rated {{$roundedAverageRating}} out of 5</p>
+      </div>
+     
+      <div class="graph-star-rating-body">
+         
+         @foreach ($ratingCounts as $star => $count) 
+         <div class="rating-list">
+            <div class="rating-list-left text-black">
+               {{ $star }} Star
+            </div>
+            <div class="rating-list-center">
+               <div class="progress">
+                  <div style="width: {{ $ratingPercentages[$star] }}%" aria-valuemax="5" aria-valuemin="0" aria-valuenow="5" role="progressbar" class="progress-bar bg-primary">
+                     <span class="sr-only">{{ $ratingPercentages[$star] }}% Complete (danger)</span>
+                  </div>
+               </div>
+            </div>
+            <div class="rating-list-right text-black">{{ number_format($ratingPercentages[$star],2) }}%</div>
+         </div>
+         @endforeach
 
+      </div>
+
+
+      <div class="graph-star-rating-footer text-center mt-3 mb-3">
+         <button type="button" class="btn btn-outline-primary btn-sm">Rate and Review</button>
+      </div>
+   </div>
    <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews">
       <a href="#" class="btn btn-outline-primary btn-sm float-right">Top Rated</a>
       <h5 class="mb-1">All Ratings and Reviews</h5>
-   <style>
+ <style>
    .icofont-ui-rating {
       color: #ccc;
    }
@@ -310,7 +334,7 @@ $coupons = App\Models\Coupon::where('client_id',$client->id)->where('status','1'
             <div class="media-body">
                <div class="reviews-members-header">
                   <span class="star-rating float-right">
-                   @php
+                    @php
                        $rating = $review->rating ?? 0;
                     @endphp 
                    @for ($i = 1; $i <= 5; $i++)

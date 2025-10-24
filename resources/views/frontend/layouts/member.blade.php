@@ -2,12 +2,12 @@
     <div class="container">
        <div class="section-header text-center white-text">
           <h2>Become a Member</h2>
-          <p>Lorem Ipsum is simply dummy text of</p>
+          <p>Join LuchPuffin today and enjoy a faster, smarter way to order your favorite meals!</p>
           <span class="line"></span>
        </div>
        <div class="row">
           <div class="col-sm-12 text-center">
-             <a href="register.html" class="btn btn-success btn-lg">
+             <a href="http://127.0.0.1:8000/register" class="btn btn-success btn-lg">
              Create an Account <i class="fa fa-chevron-circle-right"></i>
              </a>
           </div>

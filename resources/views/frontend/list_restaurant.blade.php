@@ -160,7 +160,7 @@ $menus = App\Models\Menu::orderBy('id','desc')->limit(10)->get();
                
             @foreach ($products as $product)
 <div class="col-md-4 col-sm-6 mb-4 pb-2">
-<div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
+  <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
     <div class="list-card-image">
         <div class="star position-absolute"><span class="badge badge-success"><i class="icofont-star"></i> 3.1 (300+)</span></div>
         <div class="favourite-heart text-danger position-absolute"><a href="{{ route('res.details',$product->client_id) }}"><i class="icofont-heart"></i></a></div>
@@ -170,16 +170,34 @@ $menus = App\Models\Menu::orderBy('id','desc')->limit(10)->get();
         </a>
     </div>
     <div class="p-3 position-relative">
-        <div class="list-card-body">
-        <h6 class="mb-1"><a href="{{ route('res.details',$product->client_id) }}" class="text-black"> {{ $product->name}}</a></h6>
-      
-        <p class="text-gray mb-3 time"><span class="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i class="icofont-wall-clock"></i> 20–25 min</span> <span class="float-right text-black-50"> {{ $product->price }}</span></p>
-        </div>
+      <div class="list-card-body">
+        <h6 class="mb-1"><a href="{{ route('res.details',$product->client_id) }}" class="text-black">{{ $product->name }}</a></h6>
+        <p class="text-gray mb-3 time">
+          <span class="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i class="icofont-wall-clock"></i> 20–25 min</span>
+          <span class="float-right text-black-50">{{ $product->price }}</span>
+        </p>
+      </div>
+
+      @php
+        $coupon = isset($couponsByClient) && $couponsByClient instanceof \Illuminate\Support\Collection
+                  ? $couponsByClient->get($product->client_id)
+                  : null;
+      @endphp
+      @if($coupon)
         <div class="list-card-badge">
-        <span class="badge badge-success">OFFER</span> <small>65% off | Use Coupon OSAHAN50</small>
+          <span class="badge badge-success">OFFER</span>
+          <small>
+            @if(isset($coupon->discount) && isset($coupon->discount_type) && $coupon->discount_type === 'percent')
+              {{ (int) $coupon->discount }}% off |
+            @elseif(isset($coupon->discount))
+              Save {{ number_format($coupon->discount, 2) }} |
+            @endif
+            Use Coupon {{ $coupon->coupon_code ?? $coupon->coupon_name ?? 'OFFER' }}
+          </small>
         </div>
+      @endif
     </div>
-</div>
+  </div>
 </div>    
 @endforeach
 
@@ -193,35 +211,40 @@ $menus = App\Models\Menu::orderBy('id','desc')->limit(10)->get();
  </section>
 
  <script>
-   $(document).ready(function(){
-      $('.filter-checkbox').on('change',function(){
-         var filters = {
-            categories: [],
-            citits: [],
-            menus: []
-         };
-         // console.log(filters);
-      $('filter-checkbox:chekced').each(function(){
-         var type = $(this).data('type');
-         var id = $(this).data('id');
+   $(function() {
+     $('.filter-checkbox').on('change', function() {
+       const categorys = [];
+       const citys = [];
+       const menus = [];
 
-         if (!filters[type + 's']) {
-            filters[type + 's'] = [];
-         }
-         filters[type + 's'].push(id);
-      });
+       $('.filter-checkbox:checked').each(function () {
+         const type = $(this).data('type');   // "category" | "city" | "menu"
+         const id = $(this).data('id');
 
-      $.ajax({
+         if (type === 'category') categorys.push(id);
+         if (type === 'city') citys.push(id);
+         if (type === 'menu') menus.push(id);
+       });
+
+       $.ajax({
          url: '{{ route('filter.products') }}',
          method: 'GET',
-         data: filters,
-         success: function(response){
-            $('#product-list').html(response)
+         data: { categorys, citys, menus }, // matches FilterController inputs
+         beforeSend: function() {
+           $('#product-list').addClass('opacity-50');
+         },
+         complete: function() {
+           $('#product-list').removeClass('opacity-50');
+         },
+         success: function (html) {
+           $('#product-list').html(html);
+         },
+         error: function (xhr) {
+           console.error('Filter error', xhr.responseText);
          }
-      });
-
-      });
-   })
+       });
+     });
+   });
  </script>
 
 

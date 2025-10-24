@@ -8,13 +8,55 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Websitemail;
 use App\Models\Admin;
+use App\Models\User;
+use App\Models\Category;
+use App\Models\City;
+use App\Models\Product;
+use App\Models\Menu;
+use App\Models\Order;
+use App\Models\Client;
+use Carbon\Carbon;
 class AdminController extends Controller
 {  public function AdminLogin(){
     return view('admin.login');
 }
-public function AdminDashboard(){
-    return view('admin.index');
-}
+    public function AdminDashboard()
+    {
+        $totalCategories = Category::count();
+        $totalCities = City::count();
+        $totalProducts = Product::count();
+        $totalMenus = Menu::count();
+
+        // Restaurants
+        $pendingRestaurants = Client::where('role', 'client')->where('status', 0)->count();
+        $approvedRestaurants = Client::where('role', 'client')->where('status', 1)->count();
+        $totalRestaurants = $pendingRestaurants + $approvedRestaurants;
+
+        // Orders
+        $pendingOrders = Order::where('status', 'pending')->count();
+        $processingOrders = Order::where('status', 'processing')->count();
+        $confirmedOrders = Order::where('status', 'confirmed')->count();
+        $deliveredOrders = Order::where('status', 'delivered')->count();
+        $totalOrders = Order::count();
+
+      
+
+        return view('admin.index', compact(
+            'totalCategories',
+            'totalCities',
+            'totalProducts',
+            'totalMenus',
+            'pendingRestaurants',
+            'approvedRestaurants',
+            'totalRestaurants',
+            'pendingOrders',
+            'processingOrders',
+            'confirmedOrders',
+            'deliveredOrders',
+            'totalOrders'
+            
+        ));
+    }
 public function AdminLoginSubmit(Request $request){
     $request->validate([
         'email'=>'required|email',

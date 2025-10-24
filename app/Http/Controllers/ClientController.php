@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Client;
 use App\Models\City;
-
+use App\Models\Menu;
+use App\Models\Product;
+use App\Models\Gllery;
+use App\Models\Coupon;
 
 
 class ClientController extends Controller
@@ -59,7 +62,19 @@ class ClientController extends Controller
 
     public function ClientDashboard()
     {
-        return view('client.index');
+        $id = Auth::guard('client')->id();
+
+        $totalMenus = Menu::where('client_id', $id)->count();
+        $totalProducts = Product::where('client_id', $id)->count();
+        $totalGallery = Gllery::where('client_id', $id)->count();
+        $totalCoupons = Coupon::where('client_id', $id)->count();
+
+        return view('client.index', compact(
+            'totalMenus',
+            'totalProducts',
+            'totalGallery',
+            'totalCoupons'
+        ));
     }
     // End Method 
     public function ClientLogout()

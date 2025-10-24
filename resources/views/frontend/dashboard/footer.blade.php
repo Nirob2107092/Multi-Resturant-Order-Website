@@ -2,7 +2,7 @@
     <div class="container">
        <div class="row">
           <div class="col-sm-12">
-             <h5 class="m-0">Operate food store or restaurants? <a href="login.html">Work With Us</a></h5>
+             <h5 class="m-0">Operate food store or restaurants? <a href="http://127.0.0.1:8000/client/register">Work With Us</a></h5>
           </div>
        </div>
     </div>
@@ -22,16 +22,8 @@
                    </div>
                 </div>
              </form>
-             <p><a class="text-info" href="register.html">Register now</a> to get updates on <a href="offers.html">Offers and Coupons</a></p>
-             <div class="app">
-                <p class="mb-2">DOWNLOAD APP</p>
-                <a href="#">
-                <img class="img-fluid" src="img/google.png">
-                </a>
-                <a href="#">
-                <img class="img-fluid" src="img/apple.png">
-                </a>
-             </div>
+             <p><a class="text-info" href="http://127.0.0.1:8000/register">Register now</a> to get updates on Offers and Coupons</p>
+             
           </div>
           <div class="col-md-1 col-sm-6 mobile-none">
           </div>
@@ -86,9 +78,9 @@
  </section>
  <footer class="pt-4 pb-4 text-center">
     <div class="container">
-       <p class="mt-0 mb-0">© Copyright 2020 Osahan Eat. All Rights Reserved</p>
+       <p class="mt-0 mb-0">© Copyright 2025 LunchPuffin. All Rights Reserved</p>
        <small class="mt-0 mb-0"> Made with <i class="fas fa-heart heart-icon text-danger"></i> by
-       <a class="text-danger" target="_blank" href="https://www.instagram.com/iamgurdeeposahan/">Gurdeep Osahan</a> - <a class="text-primary" target="_blank" href="https://askbootstrap.com/">Ask Bootstrap</a>
+       <a class="text-danger" target="_blank" href="https://www.instagram.com/iamgurdeeposahan/">Rysul Aman Nirob</a> - <a class="text-primary" target="_blank" href="https://askbootstrap.com/"></a>
        </small>
     </div>
  </footer>
